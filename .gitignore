@@ -6,6 +6,7 @@ config.log
 config.status
 configure
 ical
+ical.desktop
 *.gen
 startup.tcl
 tags
@@ -18,3 +19,10 @@ depcomp
 missing
 ps_header.tcl
 stamp-h1
+*.o
+*.a
+.dirstamp
+
+# vscode
+.vscode/*
+!.vscode/c_cpp_properties.json

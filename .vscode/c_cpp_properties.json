@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/tcl8.6"
+            ],
+            "defines": [
+                "ICALLIBDIR=\"/home/kyle/lib/ical/v3.0.4\""
+            ],
+            "cStandard": "gnu99",
+            "intelliSenseMode": "linux-gcc-x64",
+            "cppStandard": "gnu++98"
+        }
+    ],
+    "version": 4
+}

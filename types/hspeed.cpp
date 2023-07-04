@@ -1,7 +1,7 @@
 /* Copyright (c) 1996  by Sanjay Ghemawat */
 // Speed tests for the hashed map
 
-#include <iostream.h>
+#include <iostream>
 
 #include <stdio.h>
 #include <string.h>
@@ -11,7 +11,7 @@
 
 #include "longmap.h"
 
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     LongMap m;
     m.predict(100);
     int size = 20000;

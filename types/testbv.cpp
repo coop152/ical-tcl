@@ -111,7 +111,7 @@ static void check_ops(int size) {
         ASSERT(v.first_clear() == size);
         ASSERT(!v.empty());
 
-        for (i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
             ASSERT(v.get(i));
 
         v.invert();
@@ -121,7 +121,7 @@ static void check_ops(int size) {
     }
 }
 
-main() {
+int main() {
     int i;
 
     for (i = 0; i < 100; i++)
