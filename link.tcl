@@ -3,8 +3,8 @@
 #### Code to create and follow URI links from items ####
 
 proc follow_link {uri} {
-    if [regexp {^file://localhost/(.*)$} $uri junk filename] {
-        follow_file_link /$filename
+    if [regexp {^file://(.*)$} $uri junk filename] {
+        follow_file_link $filename
         return
     }
     if [regexp {^/} $uri] {

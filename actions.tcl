@@ -470,7 +470,7 @@ action ical_link_to_file witem {Create a link to a file} {} {
              "Select file to which link should be created."\
              filename $initial] return
 
-    $i option Link file://localhost[ical_expand_file_name $filename]
+    $i option Link file://$filename
 }
 
 action ical_link_to_uri witem {Create a link to a Web document} {} {

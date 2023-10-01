@@ -15,14 +15,14 @@
 set file_done 0
 
 proc get_file_name {leader title message var {init {}}} {
-    file_make
-
-    set result [file_interact $leader $title $message $init]
-    if $result {
+    # leader and message are ignored, but kept for compatibility
+    set result [tk_getOpenFile -title $title -initialdir $init]
+    if {$result ne ""} {
         upvar $var returnVar
-        set returnVar [fs_filename .file_dialog.box]
+        set returnVar $result
+        return 1;
     }
-    return $result
+    return 0;
 }
 
 proc file_make {} {
