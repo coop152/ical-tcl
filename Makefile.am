@@ -15,6 +15,7 @@ ical_SOURCES = cal_tcl.cpp dateeditor.cpp dispatch.cpp ical.cpp ical_tcl.cpp \
 ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time @TK_XINCLUDES@
 ical_LDADD = libcalendar.a libtime.a libtypes.a \
 	     @TK_LIB_SPEC@ @TCL_LIB_SPEC@ @TK_LIBS@
+ical_LDFLAGS = -mwindows
 
 noinst_LIBRARIES = libcalendar.a libtime.a libtypes.a
 

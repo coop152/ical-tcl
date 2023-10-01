@@ -12,11 +12,11 @@
             "cStandard": "gnu99",
             "intelliSenseMode": "linux-gcc-x64",
             "cppStandard": "gnu++98"
-        }, {
+        },
+        {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "/usr/include/tcl8.6"
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "ICALLIBDIR=\"/home/kyle/lib/ical/v3.0.4\""

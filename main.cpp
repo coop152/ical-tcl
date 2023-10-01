@@ -1,18 +1,14 @@
 /* Copyright (c) 1994 by Sanjay Ghemawat */
 /*
- * Behaves like Tk main routine if display can be opened, otherwise
- * like the Tcl main routine.  The following control whether or not
- * Tk is used --
+ * Behaves like Tk main routine by default, or like Tcl main routine
+ * when using one of these flags:
  *
- *      $DISPLAY in environment                 Use Tk
- *      -display                                Use Tk
  *      -list                                   Do not use Tk
  *      -show                                   Do not use Tk
  *      -print                                  Do not use Tk
  *      -nodisplay                              Do not use Tk
  *
- * The "-f" flag can be used to pass in an initialization script regardless
- * of whether or not Tk is used.
+ * The "-f" flag can be used to pass in an initialization script.
  *
  * All .tcl files from Tcl/Tk libraries are linked into the executable
  * as well to avoid depending on external files being installed correctly.
@@ -34,8 +30,8 @@
 #include "bitmaps/dright.xbm"
 #include "bitmaps/ical.xbm"
 
-// Is Tk available?
-static int have_tk;
+// Is Tk being used?
+static int use_tk;
 
 // Was a script specified on the command line?
 static int have_script;
@@ -51,28 +47,24 @@ main(int argc, char* argv[]) {
     // command line.
 
     have_script = 0;
-    have_tk = (getenv("DISPLAY") != 0);
+    use_tk = 1; // use Tk if no arguments are specified
 
     int i;
     for (i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-display") == 0) {
-            have_tk = 1;
-            continue;
-        }
         if (strcmp(argv[i], "-list") == 0) {
-            have_tk = 0;
+            use_tk = 0;
             continue;
         }
         if (strcmp(argv[i], "-show") == 0) {
-            have_tk = 0;
+            use_tk = 0;
             continue;
         }
         if (strcmp(argv[i], "-print") == 0) {
-            have_tk = 0;
+            use_tk = 0;
             continue;
         }
         if (strcmp(argv[i], "-nodisplay") == 0) {
-            have_tk = 0;
+            use_tk = 0;
             continue;
         }
         if ((strcmp(argv[i], "-f") == 0) || (strcmp(argv[i], "-file") == 0)) {
@@ -90,7 +82,7 @@ main(int argc, char* argv[]) {
     argv[j] = 0;
     argc = j;
 
-    if (!have_tk && have_script) {
+    if (!use_tk && have_script) {
         // If a "-f <script>" is present on the command line,
         // strip out the "-f" because tclMain does not understand it.
         for (i = 1; i < argc-1; i++) {
@@ -108,7 +100,7 @@ main(int argc, char* argv[]) {
     }
 
 
-    if (have_tk)
+    if (use_tk)
         Tk_Main(argc, argv, app_init);
     else
         Tcl_Main(argc, argv, app_init);
@@ -118,12 +110,12 @@ main(int argc, char* argv[]) {
 
 static int app_init(Tcl_Interp* tcl) {
     if (Tcl_Init(tcl) != TCL_OK) return TCL_ERROR;
-    if (have_tk && (Tk_Init(tcl) != TCL_OK)) return TCL_ERROR;
+    if (use_tk && (Tk_Init(tcl) != TCL_OK)) return TCL_ERROR;
     if (Ical_Init(tcl) != TCL_OK) return TCL_ERROR;
 
     if (!have_script) {
         // Perform default initialization
-        if (have_tk) {
+        if (use_tk) {
             if (Tcl_Eval(tcl, "ical_tk_script") == TCL_ERROR)
                 return TCL_ERROR;
 
@@ -147,7 +139,7 @@ static int app_init(Tcl_Interp* tcl) {
 (Tk_DefineBitmap(tcl,Tk_GetUid(id),n##_bits,n##_width,n##_height) == TCL_OK)
 
 int Ical_Init(Tcl_Interp* tcl) {
-    if (have_tk) {
+    if (use_tk) {
         /* Load necessary Tk support code */
         Tk_Window mainWindow = Tk_MainWindow(tcl);
 
