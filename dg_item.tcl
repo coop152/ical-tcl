@@ -180,7 +180,7 @@ proc iedit_make_tzselect {w label} {
     global all_timezones lru_timezones
     if {! [array exists all_timezones] } {
         # fill in timezone array
-        set zone_tab "/usr/share/zoneinfo/zone.tab"
+        set zone_tab "zone.tab"
         catch {set zone_tab [file join $env(TZDIR) "zone.tab"]}
 
         set f [open $zone_tab]
